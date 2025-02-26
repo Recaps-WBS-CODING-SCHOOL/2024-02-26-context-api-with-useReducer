@@ -1,5 +1,7 @@
+import { useDucks } from '../context/context';
 import duckIcon from '../assets/rubber-duck-icon.svg';
-const Navbar = ({ ducks }) => {
+const Navbar = () => {
+    const { duckState } = useDucks();
     return (
         <div className='bg-slate-800 py-4 px-8 text-2xl mb-6 flex justify-between items-center'>
             <div className='flex items-center gap-2'>
@@ -8,9 +10,9 @@ const Navbar = ({ ducks }) => {
                     src={duckIcon}
                     alt='A simple rubber duck'
                 />
-                <h2>Where wild ducks roam</h2>
+                <h2>Where wild duckState roam</h2>
             </div>
-            <h2>You have {ducks.length} ducks in the pond!</h2>
+            <h2>You have {duckState.length} duckState in the pond!</h2>
         </div>
     );
 };

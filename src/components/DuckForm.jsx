@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { useDucks } from '../context/context';
 
-const DuckForm = ({ setDucks }) => {
+const DuckForm = () => {
+    const { duckDispatch } = useDucks();
     const [form, setForm] = useState({
         name: '',
         imgUrl: '',
@@ -14,11 +16,7 @@ const DuckForm = ({ setDucks }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const newDuck = { ...form, id: crypto.randomUUID() };
-        setDucks((prev) => {
-            const updatedDucks = [...prev, newDuck];
-            localStorage.setItem('ducks', JSON.stringify(updatedDucks));
-            return updatedDucks;
-        });
+        duckDispatch({ type: 'DUCK_ADDED', payload: newDuck });
         setForm({
             name: '',
             imgUrl: '',

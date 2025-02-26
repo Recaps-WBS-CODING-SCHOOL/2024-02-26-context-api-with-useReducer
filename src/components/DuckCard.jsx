@@ -1,21 +1,16 @@
 import { useState } from 'react';
+import { useDucks } from '../context/context';
 import EditForm from './EditForm';
 
-const DuckCard = ({ duck, setDucks }) => {
+const DuckCard = ({ duck }) => {
     const [editing, setEditing] = useState(false);
+    const { duckDispatch } = useDucks();
     const { imgUrl, name, quote, id } = duck;
     const handleDelete = () => {
-        setDucks((prev) => {
-            const updatedDucks = prev.filter((duck) => duck.id !== id);
-            localStorage.setItem('ducks', JSON.stringify(updatedDucks));
-            return updatedDucks;
-        });
+        duckDispatch({ type: 'DUCK_DELETED', payload: id });
     };
 
-    if (editing)
-        return (
-            <EditForm setDucks={setDucks} {...duck} setEditing={setEditing} />
-        );
+    if (editing) return <EditForm {...duck} setEditing={setEditing} />;
 
     return (
         <div className='shadow-xl hover:shadow-2xl hover:cursor-pointer w-96 rounded-md flex-flex-col'>
